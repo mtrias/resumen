@@ -3,6 +3,8 @@ title: "Resumen de R para el Curso de Estadistica Descriptiva 2025"
 output:
   html_notebook:
     css: "styles.css"
+    theme: 
+      bootswatch: "minty"
   
 ---
 
@@ -199,12 +201,12 @@ which(murders$state %in% states)
 ```
 
 ### Indexacion con logicals
-```
+```{r eval=FALSE}
 murder_rate <- murders$total / murders$population * 1e5
 ```
 
 Equivalentes pero distintos
-```{r}
+```{r eval=FALSE}
 # retorna vector logico del mismo tamaño que murder_rate
 ind <- murder_rate < 0.71 
 murders$state[ind]
