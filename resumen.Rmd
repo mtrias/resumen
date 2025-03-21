@@ -1,30 +1,39 @@
 ---
 title: "Resumen de R para el Curso de Estadistica Descriptiva 2025"
-output: html_notebook
+output:
+  html_notebook:
+    css: "styles.css"
+  
 ---
 
-# R Notebooks
+## Render y Preview de Notebooks
 
 Existe la opcion de previsualizar en panel "viewer" de RStudio o en una ventana separada. Buscar en:
 ```
 Tools -> Global Options -> R Markdown -> Show Output Preview In
 ```
 
-- Ejecutar el chunk en el que esta el cursor: `⌘ + ⇧ + ⏎`. 
-- Agregar un nuevo chunk de R: `⌘ + ⌥ + i`
-- Previsualizar: `⌘ + ⇧ + k`
+| Atajos de Teclado                          |             |
+|:-------------------------------------------|-------------|
+| Ejecutar el chunk en el que esta el cursor | `⌘ + ⇧ + ⏎` |
+| Agregar un nuevo chunk de R                | `⌘ + ⌥ + i` |
+| Previsualizar                              | `⌘ + ⇧ + k` |
+
 
 [Cheatsheet de R Notebooks](https://posit.co/blog/the-r-markdown-cheat-sheet/)
 
 
 ## Consola R Studio
 
-- Ejecutar linea en la que esta el cursor: `⌘ + ⏎`
-- Ejecutar todo el script: `⌘ + ⇧ + ⏎`
-- Ejecutar todo el script sin echo: `⌘ + ⇧ + s`
-
 valor de retorno del ultimo comando ejecutado
 `.Last.value`
+
+| Atajos de Teclado                       |             |
+|:----------------------------------------|-------------|
+| Ejecutar linea en la que esta el cursor | `⌘ + ⏎`     |
+| Ejecutar todo el script                 | `⌘ + ⇧ + ⏎` |
+| Ejecutar todo el script sin eco         | `⌘ + ⇧ + s` |
+
 
 
 ## Paquetes
@@ -97,7 +106,7 @@ levels(region)
 ```{r}
 record <- list(name="John", student_id=123, grades=c(94,24,64), final="A")
 record$student_id
-record["student_id"]
+record[["student_id"]]
 ```
 
 
@@ -145,7 +154,7 @@ Ordenando con `order`
 ```{r}
 chars <- c("a", "c", "e", "b", "d")
 idx <- order(chars) #  1   4   2   5   3
-chars[idx]          # “a” “b” “c” “d” “e”
+chars[idx]          # "a" "b" "c" "d" "e"
 ```
 
 
@@ -174,13 +183,13 @@ which.min(x)
 ### Which, Match, %in%
 
 ```{r}
-ind <- which(murders$state == “California”)
-ind <- match(c(“New York”, “Florida”, “Texas”), murders$state)
-c(“Boston”, “Dakota”) %in% murders$state // FALSE FALSE TRUE
+ind <- which(murders$state == "California")
+ind <- match(c("New York", "Florida", "Texas"), murders$state)
+c("Boston", "Dakota") %in% murders$state # FALSE FALSE TRUE
 ```
 
 ```{r}
-states <- c(“Florida”, “Texas”)
+states <- c("Florida", "Texas")
 
 # Son equivalentes:
 match(states, murders$state)
