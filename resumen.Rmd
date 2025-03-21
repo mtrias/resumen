@@ -8,6 +8,8 @@ output:
   
 ---
 
+
+
 ## Render y Preview de Notebooks
 
 Existe la opcion de previsualizar en panel "viewer" de RStudio o en una ventana separada. Buscar en:
@@ -25,6 +27,7 @@ Tools -> Global Options -> R Markdown -> Show Output Preview In
 [Cheatsheet de R Notebooks](https://posit.co/blog/the-r-markdown-cheat-sheet/)
 
 
+
 ## Consola R Studio
 
 valor de retorno del ultimo comando ejecutado
@@ -38,12 +41,16 @@ valor de retorno del ultimo comando ejecutado
 
 
 
-## Paquetes
+## Paquetes y Datasets
 ```{r eval=FALSE}
 install.packages("uno")
 install.packages(c("uno","dos"))
 library(uno)
 ```
+
+La funcion `data()` muestra la lista de paquetes de datos de ejemplo disponibles. Cargamos una libreria (paquete) con `library(nombre_del_paquete)` y luego cargamos un set de datos del paquete con `data(nombre_del_set)`
+
+
 
 ## Funciones
 ```{r eval=FALSE}
@@ -52,19 +59,36 @@ help(function)
 args(function)
 ```
 
+`log(8,2)` es equivalente a `log(8, base=2)` ya que los argumentos se asumen en orden si el nombre no es especificado. Ver orden de argumentos usando `args(funcion)`
+
+
+
+Como examinar objetos
+```{r eval=FALSE}
+str(objeto)
+head(objeto-tipo-matriz)
+View(objeto-tipo-matriz)
+names(objeto)
+length(objeto)
+dim(objeto-tipo-matriz)
+levels(factor)
+```
+
+
 ## Tipos de Datos
-| Ejemplo |   class(a) |
-| -------:|-----------:|
-|      1L |   integer  |
-|      8  |   numeric  |
-|     "8" |      char  |
-|    TRUE |   logical  |
-|  c(8,9) |    vector  |
-|         |   factors  |
-|         |     lists  |
-|         |     matrix |
-|         | data.frame |
+|                 Ejemplo |   class(a) |
+| -----------------------:|-----------:|
+|                    `1L` |   integer  |
+|                    `8`  |   numeric  |
+|                   `"8"` |      char  |
+|                  `TRUE` |   logical  |
+|                `c(8,9)` |    vector  |
+|  `factor(LETTERS[1:5])` |   factors  |
+| `list(name="Juan",...)` |     lists  |
+|      `matrix(1:8, 2,4)` |     matrix |
+|       `data(gapminder)` | data.frame |
                
+
 
 ## Vectors
 ```{r}
@@ -87,12 +111,23 @@ names(codes)<-country
 ```
 
 
+
 ## Factors
 ```{r}
 class(murders$region)
 levels(murders$region)
 length(murders$region)
 table(murders$region
+```
+
+Por defecto los niveles se ordenan alfabeticamente, pero se pueden reordenar usando la funcion `reorder`, la cual en este ejemplo hace lo mismo que `rank` pero al revez.
+
+```{r}
+letras <- factor(LETTERS[1:5])
+levels(letras)
+numeros <- c(3,4,5,2,1)
+letras <- reorder(letras, numeros)
+levels(letras)
 ```
 
 Reordenar factor por una columna
@@ -104,17 +139,27 @@ levels(region)
 ```
 
 
+
 ## Lists
 ```{r}
-record <- list(name="John", student_id=123, grades=c(94,24,64), final="A")
+record <- list(name="John", student_id=8, grades=c(94,24,64), final="A")
 record$student_id
 record[["student_id"]]
 ```
 
+Tambien pueden haber listas con variables sin nombre. en cuyo caso no se puede utilizar `$` para acceder.
+
+```{r}
+record <- list("Juan", 8)
+record[[1]]
+```
+
+
 
 ## Matrix
+Las entradas de una matriz deben ser todas del mismo tipo.
 ```{r}
-mat <- matrix(1:12, 4, 3)
+mat <- matrix(LETTERS[1:12], 4, 3)
 mat[2, 3]
 mat[2, ]
 mat[ ,3]
@@ -123,18 +168,24 @@ mat[1:2, 2:3]
 as.data.frame(mat)
 ```
 
+
+
 ## DataFrames
 ```
 View(dataframe)
 ```
 
+
 ## Secuencias
 
 Generador de Secuencias (funcion y operador)
 ```{r}
-1:5
-seq(1,10,2)
+1:5 # integer
+seq(1,10,2) # integer
+seq(1,4,0.5) # numeric
 ```
+
+
 
 ## Conversiones
 ```{r eval=FALSE}
@@ -142,6 +193,8 @@ as.integer
 as.character
 as.numeric
 ```
+
+
 
 ## Sorting (sort, order, rank)
 
@@ -151,7 +204,6 @@ x <- c(31, 4, 15, 92, 65)
 sort(x)
 ```
 
-
 Ordenando con `order`
 ```{r eval=FALSE}
 chars <- c("a", "c", "e", "b", "d")
@@ -159,17 +211,17 @@ idx <- order(chars) #  1   4   2   5   3
 chars[idx]          # "a" "b" "c" "d" "e"
 ```
 
-
 ### Comparacion de Funciones de Ordenacion
 
 Dado el vector desordenado: `x  <- c(31, 4, 15, 92, 65)`
 
-| funcion    |   valor retorno | Descripcion |
-| ---------: | --------------: | ------------|
-|   `str(x)` | `31 4 15 92 65` |             |
-|  `sort(x)` | `4 15 31 65 92` | los valores ordenados                    |
-| `order(x)` | `2  3  1  5  4` | las posiciones de los elementos en orden |
-|  `rank(x)` | `3  1  2  5  4` | el ranking del elemento en cada posicion |
+| funcion    |    valor retorno | Descripcion                              |
+| ---------: | ---------------: | ---------------------------------------- |
+|   `str(x)` | `31  4 15 92 65` |                                          |
+|  `sort(x)` | ` 4 15 31 65 92` | los valores ordenados                    |
+| `order(x)` | ` 2  3  1  5  4` | las posiciones de los elementos en orden |
+|  `rank(x)` | ` 3  1  2  5  4` | el ranking del elemento en cada posicion |
+
 
 
 ## Funciones Utiles
@@ -180,6 +232,7 @@ min(x)
 which.max(x)
 which.min(x)
 ```
+
 
 
 ## Indexing
@@ -218,3 +271,19 @@ murders$state[ind]
 
 
 
+## Graficos Basicos ([cap 2.15](https://rafalab.dfci.harvard.edu/dslibro/r-basics.html#gráficos-básicos))
+
+```{r}
+x <- murders$population / 10^6
+y <- murders$total
+plot(x, y)
+```
+Sintaxis abreviada con `with`
+```{r eval=FALSE}
+with(murders, plot(population, total))
+```
+
+```{r}
+with(murders, hist(total / population * 1e5))
+```
+Faltan incluir: `Image` y `Boxplot`
