@@ -1,18 +1,20 @@
 ---
-title: "Resumen R - Curso de Estadistica Descriptiva"
+title: "Resumen de R para el Curso de Estadistica Descriptiva 2025"
 output: html_notebook
 ---
 
 # R Notebooks
 
-Existe la opcion de previsualizar en panel de RStudio o en una ventana separada. Buscar en:
+Existe la opcion de previsualizar en panel "viewer" de RStudio o en una ventana separada. Buscar en:
 ```
 Tools -> Global Options -> R Markdown -> Show Output Preview In
 ```
 
 - Ejecutar el chunk en el que esta el cursor: `⌘ + ⇧ + ⏎`. 
-- Agregar un nuevo chunk de R: '⌘ + ⌥ + '.
-- Previsualizar: '⌘ + ⇧ + k'
+- Agregar un nuevo chunk de R: `⌘ + ⌥ + i`
+- Previsualizar: `⌘ + ⇧ + k`
+
+[Cheatsheet de R Notebooks](https://posit.co/blog/the-r-markdown-cheat-sheet/)
 
 
 ## Consola R Studio
@@ -26,16 +28,18 @@ valor de retorno del ultimo comando ejecutado
 
 
 ## Paquetes
-```
+```{r eval=FALSE}
 install.packages("uno")
 install.packages(c("uno","dos"))
 library(uno)
 ```
 
 ## Funciones
+```{r eval=FALSE}
 help(function)
 ?function
 args(function)
+```
 
 ## Tipos de Datos
 | Ejemplo |   class(a) |
@@ -52,7 +56,7 @@ args(function)
                
 
 ## Vectors
-```
+```{r}
 codes <- c(404, 500, 501)
 codes <- c(italy=380, canada=124, egypt=818)
 codes[2]
@@ -60,13 +64,12 @@ codes[c(1,3)]
 codes[1:2]
 codes["canada"]
 codes[c("egypt","italy")]
-names(vector)
-length(vector)
-class(vector$columna)
+names(codes)
+length(codes)
 ```
 
 se pueden asignar nombres a un vector usando la funcion names
-```{r}
+```{r eval=FALSE} 
 codes<-c(380,124,818)
 country<-c("italy","canada","egypt")
 names(codes)<-country
@@ -74,7 +77,7 @@ names(codes)<-country
 
 
 ## Factors
-```
+```{r}
 class(murders$region)
 levels(murders$region)
 length(murders$region)
@@ -82,7 +85,7 @@ table(murders$region
 ```
 
 Reordenar factor por una columna
-```
+```{r}
 region <- murders$region
 value <- murders$total
 region <- reorder(region, value, FUN = sum)
@@ -91,15 +94,15 @@ levels(region)
 
 
 ## Lists
-```
-record <- list(name=“John”, student_id=123, grades=c(94,24,64), final=“A”)
+```{r}
+record <- list(name="John", student_id=123, grades=c(94,24,64), final="A")
 record$student_id
-record[[“student_id”]]
+record["student_id"]
 ```
 
 
 ## Matrix
-```
+```{r}
 mat <- matrix(1:12, 4, 3)
 mat[2, 3]
 mat[2, ]
@@ -110,13 +113,16 @@ as.data.frame(mat)
 ```
 
 ## DataFrames
-`View(dataframe)`
+```
+View(dataframe)
+```
 
 ## Secuencias
+
 Generador de Secuencias (funcion y operador)
-```
-seq(1,10,2) // 1 3 5 7 9
-1:5 // 1 2 3 4 5
+```{r}
+1:5 # 1 2 3 4 5
+seq(1,10,2) # 1 3 5 7 9
 ```
 
 ## Conversiones
@@ -127,9 +133,13 @@ as.numeric
 ```
 
 ## Sorting (sort, order, rank)
+
+Ordenando con `sort`
+```{r}
+x <- c(31, 4, 15, 92, 65)
+sort(x)
 ```
-sort(murders$total) // 2 4 5 5 8 11 …
-```
+
 
 Ordenando con `order`
 ```{r}
@@ -138,7 +148,8 @@ idx <- order(chars) #  1   4   2   5   3
 chars[idx]          # “a” “b” “c” “d” “e”
 ```
 
-Metodos de ordenacion comparados
+
+Comparacion de Metodos de Ordenacion
 
 | funcion |         retorno |
 | ------: | --------------: |
@@ -148,7 +159,7 @@ Metodos de ordenacion comparados
 |    rank | `3  1  2  5  4` |
 
 
-## Accesorias
+## Funciones Utiles
 ```{r}
 x <- c(31, 4, 92, 15, 65)
 max(x)
@@ -162,13 +173,13 @@ which.min(x)
 
 ### Which, Match, %in%
 
-```
+```{r}
 ind <- which(murders$state == “California”)
 ind <- match(c(“New York”, “Florida”, “Texas”), murders$state)
 c(“Boston”, “Dakota”) %in% murders$state // FALSE FALSE TRUE
 ```
 
-```
+```{r}
 states <- c(“Florida”, “Texas”)
 
 # Son equivalentes:
@@ -182,7 +193,7 @@ murder_rate <- murders$total / murders$population * 1e5
 ```
 
 Equivalentes pero distintos
-```
+```{r}
 # retorna vector logico del mismo tamaño que murder_rate
 ind <- murder_rate < 0.71 
 murders$state[ind]
