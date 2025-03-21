@@ -47,3 +47,6 @@ po/*~
 
 # RStudio Connect folder
 rsconnect/
+
+# Version HTML del resumen, mejor generarla que hacer commits todo el tiempo para actualizarla
+resumen.nb.html
