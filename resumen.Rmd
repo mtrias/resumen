@@ -1,35 +1,25 @@
 ---
-title: "Resumen de R para el Curso de Estadistica Descriptiva 2025"
+title: "Resumen de Estudio para el Curso de Estadistica Descriptiva 2025"
 output:
-  html_notebook:
-    css: styles.css
+  html_document:
+    css: "styles.css"
 ---
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE, include=FALSE, error=FALSE}
 library("dplyr")
 library("dslabs")
 data('murders')
 ```
 
-## Render y Preview de Notebooks
 
-Existe la opcion de previsualizar en panel "viewer" de RStudio o en una ventana separada. Buscar en:
-```
-Tools -> Global Options -> R Markdown -> Show Output Preview In
-```
+## RStudio
 
-| Atajos de Teclado de RStudio               |            | ⊞           |
-|:-------------------------------------------|:------------|:------------|
-| Ejecutar el chunk en el que esta el cursor | `⌘ + ⇧ + ⏎` | `⌘ + ⇧ + ⏎` |
-| Agregar un nuevo chunk de R                | `⌘ + ⌥ + i` | `⌘ + ⌥ + i` |
-| Previsualizar                              | `⌘ + ⇧ + k` | `⌘ + ⇧ + k` |
-| Ventana de atajos de teclado               | `⌥ + ⇧ + k` |             |
-| Ejecutar linea en la que esta el cursor    | `⌘ + ⏎`     ||
-| Ejecutar todo el script                    | `⌘ + ⇧ + ⏎` ||
-| Ejecutar todo el script sin eco            | `⌘ + ⇧ + s` ||
-
-
-[Cheatsheet de R Notebooks](https://posit.co/blog/the-r-markdown-cheat-sheet/)
+| Atajos de Teclado de RStudio sarasa               |            | ⊞           |
+|:--------------------------------------------|:------------|:------------|
+| Ventana de atajos de teclado                | `⌥ + ⇧ + k` |             |
+| Ejecutar linea en la que esta el cursor     | `⌘ + ⏎`     ||
+| Ejecutar todo el script                     | `⌘ + ⇧ + ⏎` ||
+| Ejecutar todo el script sin eco             | `⌘ + ⇧ + s` ||
 
 
 
@@ -37,6 +27,23 @@ Tools -> Global Options -> R Markdown -> Show Output Preview In
 
 valor de retorno del ultimo comando ejecutado
 `.Last.value`
+
+
+
+## R-Markdown y Notebooks
+
+Existe la opcion de previsualizar en panel "viewer" de RStudio o en una ventana separada. Buscar en:
+```
+Tools -> Global Options -> R Markdown -> Show Output Preview In
+```
+
+| Atajos de Teclado de RStudio para Notebooks |            | ⊞           |
+|:--------------------------------------------|:------------|:------------|
+| Ejecutar el chunk en el que esta el cursor  | `⌘ + ⇧ + ⏎` | `⌘ + ⇧ + ⏎` |
+| Agregar un nuevo chunk de R                 | `⌘ + ⌥ + i` | `⌘ + ⌥ + i` |
+| Previsualizar                               | `⌘ + ⇧ + k` | `⌘ + ⇧ + k` |
+
+[Cheatsheet de R Notebooks](https://posit.co/blog/the-r-markdown-cheat-sheet/)
 
 
 
@@ -57,7 +64,11 @@ search()
 
 Si queremos invocar a un objeto en un namespace particular usamos el prefijo `namespace::`
 
-## Funciones
+
+
+
+
+# Funciones
 
 `log(8,2)` es equivalente a `log(8, base=2)` ya que los argumentos se asumen en orden si el nombre no es especificado. Ver orden de argumentos usando `args(funcion)`
 
@@ -300,26 +311,31 @@ murders$state[ind]
 
 
 
-## Graficos Basicos ([cap 2.15](https://rafalab.dfci.harvard.edu/dslibro/r-basics.html#gráficos-básicos))
+
+
+# Graficos Basicos ([cap 2.15](https://rafalab.dfci.harvard.edu/dslibro/r-basics.html#gráficos-básicos))
 
 ```{r}
 x <- murders$population / 10^6
 y <- murders$total
 plot(x, y)
 ```
+
 Sintaxis abreviada con `with`
 ```{r eval=FALSE}
 with(murders, plot(population, total))
 ```
 
-```{r}
+```{r fig.width=5}
 with(murders, hist(total / population * 1e5))
 ```
-Faltan incluir: `Image` y `Boxplot`
+
+```{r echo=FALSE}
+# TODO: Faltan incluir: `Image` y `Boxplot`
+```
 
 
-
-## Conceptos Basicos de Programación ([cap 3](https://rafalab.dfci.harvard.edu/dslibro/conceptos-básicos-de-programación))
+# Conceptos Basicos de Programación ([cap 3](https://rafalab.dfci.harvard.edu/dslibro/conceptos-básicos-de-programación))
 
 ### Expresiones Condicionales
 ```{r eval=FALSE}
@@ -330,7 +346,7 @@ if (condicion-logica) {
 }
 ```
 
-Tambien existe en la version funcion: `ifelse(num > 0, 1/num, NA)`
+Tambien existe la version funcion: `ifelse(num > 0, 1/num, NA)`
 
 ```{r}
 z <- c(TRUE, TRUE, FALSE)
@@ -347,7 +363,11 @@ for (i in 1:5) { print(i) }
 
 
 
+
+
 # TidyVerse ([cap 4](https://rafalab.dfci.harvard.edu/dslibro/tidiverse.html))
+
+
 
 ## Manipulacion de Data Frames con paquete `dplyr`
 
@@ -373,6 +393,7 @@ newTable <- select(murders, state, region, rate)
 
 murders |> select(state, region, rate) |> filter(rate <= 0.71)
 ```
+
 
 
 ## Summarize
