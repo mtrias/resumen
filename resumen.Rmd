@@ -2,12 +2,14 @@
 title: "Resumen de R para el Curso de Estadistica Descriptiva 2025"
 output:
   html_notebook:
-    css: "styles.css"
-    
-  
+    css: styles.css
 ---
 
-
+```{r echo=FALSE}
+library("dplyr")
+library("dslabs")
+data('murders')
+```
 
 ## Render y Preview de Notebooks
 
@@ -16,28 +18,25 @@ Existe la opcion de previsualizar en panel "viewer" de RStudio o en una ventana 
 Tools -> Global Options -> R Markdown -> Show Output Preview In
 ```
 
-| Atajos de Teclado                          |            | ⊞           |
+| Atajos de Teclado de RStudio               |            | ⊞           |
 |:-------------------------------------------|:------------|:------------|
 | Ejecutar el chunk en el que esta el cursor | `⌘ + ⇧ + ⏎` | `⌘ + ⇧ + ⏎` |
 | Agregar un nuevo chunk de R                | `⌘ + ⌥ + i` | `⌘ + ⌥ + i` |
 | Previsualizar                              | `⌘ + ⇧ + k` | `⌘ + ⇧ + k` |
 | Ventana de atajos de teclado               | `⌥ + ⇧ + k` |             |
+| Ejecutar linea en la que esta el cursor    | `⌘ + ⏎`     ||
+| Ejecutar todo el script                    | `⌘ + ⇧ + ⏎` ||
+| Ejecutar todo el script sin eco            | `⌘ + ⇧ + s` ||
 
 
 [Cheatsheet de R Notebooks](https://posit.co/blog/the-r-markdown-cheat-sheet/)
 
 
 
-## Consola R Studio
+## Consola de R Studio
 
 valor de retorno del ultimo comando ejecutado
 `.Last.value`
-
-| Atajos de Teclado                       |             |
-|:----------------------------------------|-------------|
-| Ejecutar linea en la que esta el cursor | `⌘ + ⏎`     |
-| Ejecutar todo el script                 | `⌘ + ⇧ + ⏎` |
-| Ejecutar todo el script sin eco         | `⌘ + ⇧ + s` |
 
 
 
