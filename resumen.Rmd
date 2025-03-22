@@ -3,8 +3,7 @@ title: "Resumen de R para el Curso de Estadistica Descriptiva 2025"
 output:
   html_notebook:
     css: "styles.css"
-    theme: 
-      bootswatch: "minty"
+    
   
 ---
 
@@ -17,11 +16,12 @@ Existe la opcion de previsualizar en panel "viewer" de RStudio o en una ventana 
 Tools -> Global Options -> R Markdown -> Show Output Preview In
 ```
 
-| Atajos de Teclado                          |             |
-|:-------------------------------------------|-------------|
-| Ejecutar el chunk en el que esta el cursor | `⌘ + ⇧ + ⏎` |
-| Agregar un nuevo chunk de R                | `⌘ + ⌥ + i` |
-| Previsualizar                              | `⌘ + ⇧ + k` |
+| Atajos de Teclado                          |            | ⊞           |
+|:-------------------------------------------|:------------|:------------|
+| Ejecutar el chunk en el que esta el cursor | `⌘ + ⇧ + ⏎` | `⌘ + ⇧ + ⏎` |
+| Agregar un nuevo chunk de R                | `⌘ + ⌥ + i` | `⌘ + ⌥ + i` |
+| Previsualizar                              | `⌘ + ⇧ + k` | `⌘ + ⇧ + k` |
+| Ventana de atajos de teclado               | `⌥ + ⇧ + k` |             |
 
 
 [Cheatsheet de R Notebooks](https://posit.co/blog/the-r-markdown-cheat-sheet/)
@@ -50,20 +50,34 @@ library(uno)
 
 La funcion `data()` muestra la lista de paquetes de datos de ejemplo disponibles. Cargamos una libreria (paquete) con `library(nombre_del_paquete)` y luego cargamos un set de datos del paquete con `data(nombre_del_set)`
 
+Los paquetes existen en un `namespace` y los objetos dentro de los diferentes paquetes a veces pueden tener el mismo nombre. En caso de colisiones R sigue un orden de busqueda que se puede ver con:
 
+```{r}
+search()
+```
+
+Si queremos invocar a un objeto en un namespace particular usamos el prefijo `namespace::`
 
 ## Funciones
+
+`log(8,2)` es equivalente a `log(8, base=2)` ya que los argumentos se asumen en orden si el nombre no es especificado. Ver orden de argumentos usando `args(funcion)`
+
+### Funciones para explorar funciones
 ```{r eval=FALSE}
 help(function)
 ?function
 args(function)
 ```
 
-`log(8,2)` es equivalente a `log(8, base=2)` ya que los argumentos se asumen en orden si el nombre no es especificado. Ver orden de argumentos usando `args(funcion)`
-
-
-
-Como examinar objetos
+### Funciones para trabajar con vectores
+```{r}
+x <- c(31, 4, 92, 15, 65)
+max(x)
+min(x)
+which.max(x)
+which.min(x)
+```
+### Funciones para examinar objetos
 ```{r eval=FALSE}
 str(objeto)
 head(objeto-tipo-matriz)
@@ -75,9 +89,30 @@ levels(factor)
 ```
 
 
+
+### Definicion de funciones
+
+```{r eval=FALSE}
+avg <- function(x) {
+  s <- sum(x) # variable local
+  n <- length(x)
+  s/n # valor de retorno
+}
+```
+
+Ejemplo con argumentos multiples
+```{r eval=FALSE}
+avg <- function(x, arithmetic=TRUE) {
+  n <- length(x)
+  ifelse(arithmetic, sum(x)/n, prod(x)^(1/n))
+}
+```
+
+
+
 ## Tipos de Datos
 |                 Ejemplo |   class(a) |
-| -----------------------:|-----------:|
+| -----------------------:|:-----------|
 |                    `1L` |   integer  |
 |                    `8`  |   numeric  |
 |                   `"8"` |      char  |
@@ -91,9 +126,14 @@ levels(factor)
 
 
 ## Vectors
+
 ```{r}
-codes <- c(404, 500, 501)
+x <- c(404, 500, 501)
+class(x)
+
 codes <- c(italy=380, canada=124, egypt=818)
+str(codes)
+
 codes[2]
 codes[c(1,3)]
 codes[1:2]
@@ -104,10 +144,11 @@ length(codes)
 ```
 
 se pueden asignar nombres a un vector usando la funcion names
-```{r eval=FALSE} 
-codes<-c(380,124,818)
-country<-c("italy","canada","egypt")
-names(codes)<-country
+```{r} 
+codes <- c(380, 124, 818)
+country <- c("italy", "canada", "egypt")
+names(codes) <- country
+str(codes)
 ```
 
 
@@ -117,7 +158,7 @@ names(codes)<-country
 class(murders$region)
 levels(murders$region)
 length(murders$region)
-table(murders$region
+table(murders$region)
 ```
 
 Por defecto los niveles se ordenan alfabeticamente, pero se pueden reordenar usando la funcion `reorder`, la cual en este ejemplo hace lo mismo que `rank` pero al revez.
@@ -125,7 +166,7 @@ Por defecto los niveles se ordenan alfabeticamente, pero se pueden reordenar usa
 ```{r}
 letras <- factor(LETTERS[1:5])
 levels(letras)
-numeros <- c(3,4,5,2,1)
+numeros <- c(3, 4, 5, 2, 1)
 letras <- reorder(letras, numeros)
 levels(letras)
 ```
@@ -224,17 +265,6 @@ Dado el vector desordenado: `x  <- c(31, 4, 15, 92, 65)`
 
 
 
-## Funciones Utiles
-```{r}
-x <- c(31, 4, 92, 15, 65)
-max(x)
-min(x)
-which.max(x)
-which.min(x)
-```
-
-
-
 ## Indexing
 
 ### Which, Match, %in%
@@ -287,3 +317,63 @@ with(murders, plot(population, total))
 with(murders, hist(total / population * 1e5))
 ```
 Faltan incluir: `Image` y `Boxplot`
+
+
+
+## Conceptos Basicos de Programación ([cap 3](https://rafalab.dfci.harvard.edu/dslibro/conceptos-básicos-de-programación))
+
+### Expresiones Condicionales
+```{r eval=FALSE}
+if (condicion-logica) {
+  # acciones si condicion-logica es TRUE
+} else {
+  # acciones si condicion-logica es FALSE
+}
+```
+
+Tambien existe en la version funcion: `ifelse(num > 0, 1/num, NA)`
+
+```{r}
+z <- c(TRUE, TRUE, FALSE)
+any(z)
+all(z)
+```
+
+
+### Bucles
+
+```{r}
+for (i in 1:5) { print(i) }
+```
+
+
+
+# TidyVerse ([cap 4](https://rafalab.dfci.harvard.edu/dslibro/tidiverse.html))
+
+## Manipulacion de Data Frames con paquete `dplyr`
+
+Observar que todas las funciones de `dplyr` agregan la funcionalidad de `with`
+```{r}
+
+# Agregar columnas
+murders <- mutate(murders, rate = total / population * 1e6)
+
+# Crear subconjuntos
+filter(murders, rate <= 0.71)
+
+# Seleccionar columnas
+newTable <- select(murders, state, region, rate)
+```
+
+
+
+## Pipe
+```{r}
+# Equivalente a log2(sqrt(16))
+16 |> sqrt() |> log(base=2)
+
+murders |> select(state, region, rate) |> filter(rate <= 0.71)
+```
+
+
+## Summarize
