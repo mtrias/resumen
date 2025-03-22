@@ -43,8 +43,8 @@ Tools -> Global Options -> R Markdown -> Show Output Preview In
 | Agregar un nuevo chunk de R                 | `⌘ + ⌥ + i` | `⌘ + ⌥ + i` |
 | Previsualizar                               | `⌘ + ⇧ + k` | `⌘ + ⇧ + k` |
 
-[Cheatsheet de R Notebooks](https://posit.co/blog/the-r-markdown-cheat-sheet/)
-
+- [Cheatsheet de R Notebooks](https://posit.co/blog/the-r-markdown-cheat-sheet/)
+- [Opciones de configuracion de chunks para Knitr](https://yihui.org/knitr/options/)
 
 
 ## Paquetes y Datasets
@@ -70,7 +70,7 @@ Si queremos invocar a un objeto en un namespace particular usamos el prefijo `na
 
 # Funciones
 
-`log(8,2)` es equivalente a `log(8, base=2)` ya que los argumentos se asumen en orden si el nombre no es especificado. Ver orden de argumentos usando `args(funcion)`
+Cuando invocamos una funcion los nombres de argumentos son opcionales. Por ejemplo, `log(8,2)` es equivalente a `log(8, base=2)` ya que los argumentos se asumen en orden si el nombre no es especificado. Ver orden de argumentos usando `args(funcion)`
 
 ### Funciones para explorar funciones
 ```{r eval=FALSE}
@@ -102,15 +102,16 @@ levels(factor)
 
 ### Definicion de funciones
 
+Notar que en este ejemplo, `s` y `n` son variables locales, y `s/n` es el valor de retorno
 ```{r eval=FALSE}
 avg <- function(x) {
-  s <- sum(x) # variable local
+  s <- sum(x) 
   n <- length(x)
-  s/n # valor de retorno
+  s/n
 }
 ```
 
-Ejemplo con argumentos multiples
+Ejemplo con argumentos multiples. Aqui el segundo argumento es opcional, es decir toma el valor `TRUE` por defecto.
 ```{r eval=FALSE}
 avg <- function(x, arithmetic=TRUE) {
   n <- length(x)
@@ -371,27 +372,27 @@ for (i in 1:5) { print(i) }
 
 ## Manipulacion de Data Frames con paquete `dplyr`
 
-Observar que todas las funciones de `dplyr` agregan la funcionalidad de `with`
+Observar que todas las funciones de `dplyr` agregan la funcionalidad de `with`.
 ```{r}
-
 # Agregar columnas
-murders <- mutate(murders, rate = total / population * 1e6)
+newTable <- mutate(murders, rate = total / population * 1e6)
 
 # Crear subconjuntos
-filter(murders, rate <= 0.71)
+filter(newTable, rate <= 3.71)
 
 # Seleccionar columnas
-newTable <- select(murders, state, region, rate)
+newTable <- select(newTable, state, region, rate)
 ```
 
 
 
 ## Pipe
+Concatena (canaliza) llamadas de funciones donde el primer argumento de la siguiente es el valor de retorno de la anterior
 ```{r}
 # Equivalente a log2(sqrt(16))
 16 |> sqrt() |> log(base=2)
 
-murders |> select(state, region, rate) |> filter(rate <= 0.71)
+newTable |> select(state, region, rate) |> filter(rate <= 3.71)
 ```
 
 
