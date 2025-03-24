@@ -9,8 +9,18 @@ output:
 library("dplyr")
 library("dslabs")
 data('murders')
+data('heights')
 ```
 
+
+## Directorio de Trabajo
+```{r}
+getwd()
+setwd()
+
+# Configurar el directorio de trabajo al directorio del script que se ejecuta en RStudio
+setwd( dirname(rstudioapi::getSourceEditorContext()$path) )
+```
 
 ## RStudio
 
@@ -87,6 +97,7 @@ min(x)
 which.max(x)
 which.min(x)
 ```
+
 ### Funciones para examinar objetos
 ```{r eval=FALSE}
 str(objeto)
@@ -98,7 +109,10 @@ dim(objeto-tipo-matriz)
 levels(factor)
 ```
 
-
+### Otras Funciones
+```{r eval=FALSE}
+between(x, a, b) # equivalente a x >= a & x <= b
+```
 
 ### Definicion de funciones
 
@@ -244,6 +258,7 @@ seq(1,4,0.5) # numeric
 as.integer
 as.character
 as.numeric
+as_tibble # convierte data.frame en tibble
 ```
 
 
@@ -341,9 +356,9 @@ with(murders, hist(total / population * 1e5))
 ### Expresiones Condicionales
 ```{r eval=FALSE}
 if (condicion-logica) {
-  # acciones si condicion-logica es TRUE
+  # se ejecuta si condicion-logica es TRUE
 } else {
-  # acciones si condicion-logica es FALSE
+  # se ejecuta si condicion-logica es FALSE
 }
 ```
 
@@ -394,7 +409,104 @@ Concatena (canaliza) llamadas de funciones donde el primer argumento de la sigui
 
 newTable |> select(state, region, rate) |> filter(rate <= 3.71)
 ```
+Por defecto el pipe canaliza hacia el primer argumento, pero podemos usar el marcador de posicion `_` para pasar el parametro en otra posicion. Los siguientes ejemplos son equivalentes:
+```{r}
+log(8, base = 2)
+2 |> log(8, base =_)
+```
 
 
 
 ## Summarize
+Calcula y despliega estadisticas de resumen de datos.
+
+```{r}
+heights |> filter(sex == "Female") |> summarize(promedio=mean(height), ds=sd(height))
+```
+
+## Quantile
+Retorna los cuartiles del vector proporcionado como parametro. Es decir los percentiles 0, 25, 50, 75 y 100.
+```{r}
+quantile(heights$height)
+```
+
+Opcionalmente pueden filtrarse a los cuartiles que nos interesan, por ejemplo, si queremos obtener unicamente el minimo, maximo y mediana:
+```{r}
+quantile(heights$height, c(0, 0.5, 1))
+```
+
+
+
+## Group_by
+Por ejemplo, podriamos calcular el promedio y desviacion standard para las alturas de hombres y mujeres por separado.
+```{r}
+heights |> group_by(sex)
+```
+
+El valor retornado por `group_by` ya no es un `data.frame` sino un `grouped by data frame`. Es decir muchas tablas agrupadas. Las funciones de `dplyr` ahora se comportan de manera diferente. Es decir se aplicaran a cada grupo por separado.
+
+```{r}
+heights |> group_by(sex) |> summarize(promedio=mean(height), desviacion=sd(height))
+```
+
+
+
+# Pull
+Todas las funciones canalizadas de `dplyr` retornan un `data.frame`, incluso las que retornan numeros como `summarize`. Si queremos acceder directamente al valor de retorno usamos `pull`. Por ej:
+```{r}
+class (
+  murders |> summarize(rate = sum(total) / sum(population) * 1e6)
+)
+
+class (
+  murders |> summarize(rate = sum(total) / sum(population) * 1e6) |> pull(rate)
+)
+```
+
+
+
+## Arrange
+```{r}
+murders |> arrange(population) |> head()
+```
+
+Por defecto ordena de manera ascendente, se puede usar `desc(population)` para ordenarlo de manera descendente. Tambien se puede ordenar por varias columnas a la vez.
+
+```{r}
+murders |> arrange(desc(rate), population) |> head()
+```
+
+
+
+## Top_n
+El ejemplo anterior puede reducirse un poco usando `top_n`, que es especifica para esa funcionalidad. Pero tener en cuenta que no produce resultados ordenados.
+```{r}
+murders |> top_n(5, total)
+```
+
+
+
+## Tibbles
+
+```{r}
+tibble(
+  names = c("Juan", "Pepe", "Lola"),
+  parcial1 = c(95, 12, 98),
+  parcial2 = c(1, 90, 28)
+)
+```
+
+Los tibbles son una version mas moderna del `data.frame` y son el formato preferido por tidyverse. Las funciones que producen un `data.frame` desde cero, devuelven un tibble. Por coherencia, los verbos `select`, `filter`, `mutate` y `arrange` preservan la clase del input. 
+
+- los tibbles se ven mejor en la consola
+- Los subconjuntos de tibbles son tibbles
+- Acceder a una columna inexistente resulta en un warning, mientras que en un `data.frame` resulta en un `NULL`
+- Las entradas de un tibble pueden ser objetos mas complejos como listas o funciones
+- los tibbles se pueden agrupar con `group_by`
+
+
+
+
+
+# Importando Datos ([Cap 5](https://rafalab.dfci.harvard.edu/dslibro/importing-data.html))
+
