@@ -14,22 +14,24 @@ data('heights')
 
 
 ## Directorio de Trabajo
-```{r}
-getwd()
-setwd()
+```{r eval=FALSE}
+getwd() # retorna el directorio de trabajo actual
+setwd(directorio_deseado) # configura un nuevo directorio de trabajo
 
-# Configurar el directorio de trabajo al directorio del script que se ejecuta en RStudio
+# En RStudio, esta linea configura el directorio de trabajo al directorio del script que se ejecuta 
 setwd( dirname(rstudioapi::getSourceEditorContext()$path) )
 ```
 
+
+
 ## RStudio
 
-| Atajos de Teclado de RStudio sarasa               |            | ⊞           |
-|:--------------------------------------------|:------------|:------------|
-| Ventana de atajos de teclado                | `⌥ + ⇧ + k` |             |
-| Ejecutar linea en la que esta el cursor     | `⌘ + ⏎`     ||
-| Ejecutar todo el script                     | `⌘ + ⇧ + ⏎` ||
-| Ejecutar todo el script sin eco             | `⌘ + ⇧ + s` ||
+| Atajos de Teclado de RStudio sarasa         |            | ⊞              |
+|:--------------------------------------------|:------------|:---------------|
+| Ventana de atajos de teclado                | `⌥ + ⇧ + k` | `ctrl + ⇧ + k` |
+| Ejecutar linea en la que esta el cursor     | `⌘ + ⏎`     | `ctrl + ⏎`     |
+| Ejecutar todo el script                     | `⌘ + ⇧ + ⏎` | ? |
+| Ejecutar todo el script sin eco             | `⌘ + ⇧ + s` | ? |
 
 
 
@@ -47,13 +49,14 @@ Existe la opcion de previsualizar en panel "viewer" de RStudio o en una ventana 
 Tools -> Global Options -> R Markdown -> Show Output Preview In
 ```
 
-| Atajos de Teclado de RStudio para Notebooks |            | ⊞           |
-|:--------------------------------------------|:------------|:------------|
-| Ejecutar el chunk en el que esta el cursor  | `⌘ + ⇧ + ⏎` | `⌘ + ⇧ + ⏎` |
-| Agregar un nuevo chunk de R                 | `⌘ + ⌥ + i` | `⌘ + ⌥ + i` |
-| Previsualizar                               | `⌘ + ⇧ + k` | `⌘ + ⇧ + k` |
+| Atajos de Teclado de RStudio para Notebooks |            | ⊞              |
+|:--------------------------------------------|:------------|:---------------|
+| Ejecutar el chunk en el que esta el cursor  | `⌘ + ⇧ + ⏎` | `ctrl + ⇧ + ⏎` |
+| Agregar un nuevo chunk de R                 | `⌘ + ⌥ + i` | `ctrl + ⌥ + i` |
+| Previsualizar                               | `⌘ + ⇧ + k` | `ctrl + ⇧ + k` |
 
 - [Cheatsheet de R Notebooks](https://posit.co/blog/the-r-markdown-cheat-sheet/)
+- [Cheatsheet de ggplot2](https://rstudio.github.io/cheatsheets/html/data-visualization.html)
 - [Opciones de configuracion de chunks para Knitr](https://yihui.org/knitr/options/)
 
 
@@ -331,7 +334,8 @@ murders$state[ind]
 
 # Graficos Basicos ([cap 2.15](https://rafalab.dfci.harvard.edu/dslibro/r-basics.html#gráficos-básicos))
 
-```{r}
+### Diagrama de Dispersion
+```{r fig.width=5}
 x <- murders$population / 10^6
 y <- murders$total
 plot(x, y)
@@ -342,6 +346,7 @@ Sintaxis abreviada con `with`
 with(murders, plot(population, total))
 ```
 
+### Histograma
 ```{r fig.width=5}
 with(murders, hist(total / population * 1e5))
 ```
@@ -472,8 +477,8 @@ murders |> arrange(population) |> head()
 
 Por defecto ordena de manera ascendente, se puede usar `desc(population)` para ordenarlo de manera descendente. Tambien se puede ordenar por varias columnas a la vez.
 
-```{r}
-murders |> arrange(desc(rate), population) |> head()
+```{r eval=FALSE}
+murders |> arrange(desc(total), population) |> head()
 ```
 
 
@@ -510,3 +515,28 @@ Los tibbles son una version mas moderna del `data.frame` y son el formato prefer
 
 # Importando Datos ([Cap 5](https://rafalab.dfci.harvard.edu/dslibro/importing-data.html))
 
+
+Copia un archivo de datos de paquetes de R hacia el directorio de trabajo
+```{r eval=FALSE}
+filename <- "murders.csv"
+dir <- system.file("extdata", package="dslabs")
+fullpath <- file.path(dir, filename)
+file.copy(fullpath, "murders.csv")
+```
+
+El paquete base R provee: `read.table`, `read.csv`, `read.delim`.
+
+Funciones del paquete `readr` para leer archivos de texto: `read_table`, `read_csv`, `read_csv2`, `read_tsv`, `read_delim`. Estos archivos reciben como parametro tanto el nombre de un archivo en el sistema de archivos como una URL. En caso de querer descargar un archivo desde una URL, se puede usar `download.file(url, "nombre_archivo.csv")`.
+
+Para saber que hay adentro del archivo podriamos usar: `read_lines("murders.csv", n_max=3)`.
+
+El paquete `readxl` tiene funciones para leer libros de Microsoft Excel: `read_excel`, `read_xls`, `read_xlsx`. Por defecto leen la primer hoja del archivo, pero se puede pasar el nombre de la hoja a estas funciones, y se puede usar la funcion `excel_sheets` para leer los nombres de las hojas del archivo.
+
+
+
+
+# dplyr::ggplot2 ([Cap 7](https://rafalab.dfci.harvard.edu/dslibro/ggplot2.html))
+
+Existen muchos paquetes para hacer graficos (ver `grid` y `lattice`). En este curso usamos `ggplot2` porque construye los graficos en componentes, de manera que es facil para principiantes.
+
+Trabaja exclusivamente con datos en formato `tidy` (filas=observaciones, columnas=variables)
