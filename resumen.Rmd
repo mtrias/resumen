@@ -2,7 +2,12 @@
 title: "Resumen de Estudio para el Curso de Estadistica Descriptiva 2025"
 output:
   html_document:
-    css: "styles.css"
+    css: styles.css
+    toc: TRUE
+    toc_float: TRUE
+    code_folding: show
+    anchor_sections: TRUE
+    highlight: tango
 ---
 
 ```{r echo=FALSE, warning=FALSE, include=FALSE, error=FALSE}
@@ -12,6 +17,9 @@ data('murders')
 data('heights')
 ```
 
+
+# Lo Basico de R
+[📖](https://rafalab.dfci.harvard.edu/dslibro/r-basics)
 
 ## Directorio de Trabajo
 ```{r eval=FALSE}
@@ -83,7 +91,7 @@ Si queremos invocar a un objeto en un namespace particular usamos el prefijo `na
 
 
 
-# Funciones
+## Funciones
 
 Cuando invocamos una funcion los nombres de argumentos son opcionales. Por ejemplo, `log(8,2)` es equivalente a `log(8, base=2)` ya que los argumentos se asumen en orden si el nombre no es especificado. Ver orden de argumentos usando `args(funcion)`
 
@@ -115,6 +123,7 @@ levels(factor)
 ```
 
 ### Otras Funciones
+
 ```{r eval=FALSE}
 between(x, a, b) # equivalente a x >= a & x <= b
 ```
@@ -141,6 +150,7 @@ avg <- function(x, arithmetic=TRUE) {
 
 
 ## Tipos de Datos
+
 |                 Ejemplo |   class(a) |
 | -----------------------:|:-----------|
 |                    `1L` |   integer  |
@@ -334,7 +344,8 @@ murders$state[ind]
 
 
 
-# Graficos Basicos ([cap 2.15](https://rafalab.dfci.harvard.edu/dslibro/r-basics.html#gráficos-básicos))
+# Graficos Basicos
+[📖](https://rafalab.dfci.harvard.edu/dslibro/r-basics.html#gráficos-básicos)
 
 ### Diagrama de Dispersion
 ```{r fig.width=5}
@@ -358,7 +369,8 @@ with(murders, hist(total / population * 1e5))
 ```
 
 
-# Conceptos Basicos de Programación ([cap 3](https://rafalab.dfci.harvard.edu/dslibro/conceptos-básicos-de-programación))
+# Conceptos Basicos de Programación
+[📖](https://rafalab.dfci.harvard.edu/dslibro/conceptos-básicos-de-programación)
 
 ### Expresiones Condicionales
 ```{r eval=FALSE}
@@ -388,7 +400,8 @@ for (i in 1:5) { print(i) }
 
 
 
-# TidyVerse ([cap 4](https://rafalab.dfci.harvard.edu/dslibro/tidiverse.html))
+# TidyVerse
+[📖](https://rafalab.dfci.harvard.edu/dslibro/tidiverse.html)
 
 
 
@@ -515,7 +528,8 @@ Los tibbles son una version mas moderna del `data.frame` y son el formato prefer
 
 
 
-# Importando Datos ([Cap 5](https://rafalab.dfci.harvard.edu/dslibro/importing-data.html))
+# Importando Datos
+[📖](https://rafalab.dfci.harvard.edu/dslibro/importing-data.html)
 
 
 Copia un archivo de datos de paquetes de R hacia el directorio de trabajo
@@ -537,7 +551,8 @@ El paquete `readxl` tiene funciones para leer libros de Microsoft Excel: `read_e
 
 
 
-# dplyr::ggplot2 ([Cap 7](https://rafalab.dfci.harvard.edu/dslibro/ggplot2.html))
+# dplyr::ggplot2
+[📖](https://rafalab.dfci.harvard.edu/dslibro/ggplot2.html)
 
 Existen muchos paquetes para hacer graficos (ver `grid` y `lattice`). En este curso usamos `ggplot2` porque construye los graficos en componentes, de manera que es facil para principiantes.
 
