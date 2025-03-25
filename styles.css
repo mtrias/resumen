@@ -9,6 +9,7 @@
     border-style: none none dotted dotted;
     border-radius: 0;
     border-color: #ccc;
+    margin-bottom: 5px;
 }
 
 .code-folding-btn.collapsed {
@@ -30,6 +31,7 @@
 
 h1, h2, h3 {
   color: #337ab7;
+  font-family: Avenir, Lucida Grande
 }
 
 h1.title {
@@ -52,17 +54,19 @@ h3 {
 }
 
 pre {
-  background: #fdfdfd;
+  background: #fcfcfc;
   border-style: dotted;
   border-radius: 0;
   font-size: 10px;
-  font-family: Cascadia Code, Consolas, Fira Code, Droid Sans Mono, monospace;
+  font-family: Cascadia Code, Fira Code, Consolas, Fira Code, Droid Sans Mono, monospace;
 }
-
+pre:not([class]) {
+  background: #fcfcfc;
+}
 pre.r {
   background: #fafaff;
 }
 
-pre.r + pre {
-      margin-top: -11px;
+pre.r + pre, .sourceCode + pre {
+  margin-top: -2em;
 }
