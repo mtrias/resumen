@@ -26,12 +26,12 @@ setwd( dirname(rstudioapi::getSourceEditorContext()$path) )
 
 ## RStudio
 
-| Atajos de Teclado de RStudio sarasa         |            | ⊞              |
-|:--------------------------------------------|:------------|:---------------|
-| Ventana de atajos de teclado                | `⌥ + ⇧ + k` | `ctrl + ⇧ + k` |
-| Ejecutar linea en la que esta el cursor     | `⌘ + ⏎`     | `ctrl + ⏎`     |
-| Ejecutar todo el script                     | `⌘ + ⇧ + ⏎` | ? |
-| Ejecutar todo el script sin eco             | `⌘ + ⇧ + s` | ? |
+| Atajos de Teclado de RStudio                |            | ⊞                |
+|:--------------------------------------------|:------------|:-----------------|
+| Ventana de atajos de teclado                | `⌥ + ⇧ + k` | `Ctrl + ⇧ + k`   |
+| Ejecutar linea en la que esta el cursor     | `⌘ + ⏎`     | `Ctrl + ⏎`       |
+| Ejecutar todo el script                     | `⌘ + ⇧ + ⏎` | `Ctrl + Alt + r` |
+| Ejecutar todo el script sin eco             | `⌘ + ⇧ + s` | 🤷️               |
 
 
 
@@ -49,14 +49,16 @@ Existe la opcion de previsualizar en panel "viewer" de RStudio o en una ventana 
 Tools -> Global Options -> R Markdown -> Show Output Preview In
 ```
 
-| Atajos de Teclado de RStudio para Notebooks |            | ⊞              |
-|:--------------------------------------------|:------------|:---------------|
-| Ejecutar el chunk en el que esta el cursor  | `⌘ + ⇧ + ⏎` | `ctrl + ⇧ + ⏎` |
-| Agregar un nuevo chunk de R                 | `⌘ + ⌥ + i` | `ctrl + ⌥ + i` |
-| Previsualizar                               | `⌘ + ⇧ + k` | `ctrl + ⇧ + k` |
+| Atajos de Teclado de RStudio para Notebooks |            | ⊞                |
+|:--------------------------------------------|:------------|:-----------------|
+| Ejecutar el chunk en el que esta el cursor  | `⌘ + ⇧ + ⏎` | `Ctrl + ⇧ + ⏎`   |
+| Agregar un nuevo chunk de R                 | `⌘ + ⌥ + i` | `Ctrl + Alt + i` |
+| Previsualizar                               | `⌘ + ⇧ + k` | `Ctrl + ⇧ + k`   |
 
+- [CheatSheet de R-Studio](https://rstudio.github.io/cheatsheets/html/rstudio-ide.html)
 - [Cheatsheet de R Notebooks](https://posit.co/blog/the-r-markdown-cheat-sheet/)
 - [Cheatsheet de ggplot2](https://rstudio.github.io/cheatsheets/html/data-visualization.html)
+- [Otras Cheatsheets de Posit](https://posit.co/resources/cheatsheets/)
 - [Opciones de configuracion de chunks para Knitr](https://yihui.org/knitr/options/)
 
 
@@ -540,3 +542,12 @@ El paquete `readxl` tiene funciones para leer libros de Microsoft Excel: `read_e
 Existen muchos paquetes para hacer graficos (ver `grid` y `lattice`). En este curso usamos `ggplot2` porque construye los graficos en componentes, de manera que es facil para principiantes.
 
 Trabaja exclusivamente con datos en formato `tidy` (filas=observaciones, columnas=variables)
+
+En ggplot, los graficos estan definidos en capas. Las capas pueden definir geometrías, calcular estadísticas de resúmen, definir escalas, definir aspectos estéticos, etc. Para agregar capas usamos `+`
+
+El primer paso es definir un objeto ggplot y pasarle los datos
+```{r eval=FALSE}
+ggplot(data = murders)
+```
+
+Si no se asigna el valor de retorno a nada, entonces se imprime, pero podriamos asignarlo a una variable y luego imprimir el grafico con `print()`
