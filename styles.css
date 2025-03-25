@@ -1,11 +1,35 @@
 .code-folding-btn {
-    position: absolute;
-    right: 15px;
-    top: 1px;
+    position: relative;
+    top: 21.5px;
+
+    background: transparent;
+    color: 999;
+    font-family: monospace;
+    font-size: 9px;
+    border-style: none none dotted dotted;
+    border-radius: 0;
+    border-color: #ccc;
+}
+
+.code-folding-btn.collapsed {
+  top: 0;
+  border-color: #ccc;
+  background: transparent;
+  border-style: dotted;
+}
+
+.code-folding-btn:hover {
+  color: cornflowerblue;
+  background-color: transparent;
+  border-color: #ccc;
 }
 
 #header {
 
+}
+
+h1, h2, h3 {
+  color: #337ab7;
 }
 
 h1.title {
