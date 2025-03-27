@@ -31,7 +31,7 @@
 
 h1, h2, h3 {
   color: #337ab7;
-  font-family: Avenir, Lucida Grande
+  font-family: Avenir, Arial Rounded MT, Helvetica Neue
 }
 
 h1.title {
@@ -63,12 +63,26 @@ pre {
 
 pre:not([class]) {
   background: #fcfcfc;
-}
-
-pre.r {
   background: #fafaff;
 }
 
 pre.r + pre, .sourceCode + pre {
+}
+
+pre.r {
   margin-top: -2em;
+}
+
+.tocify li {
+  font-family: Consolas;
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tocify li:hover {
+  background: #f6f6f9;
+  color: #337ab7;
 }

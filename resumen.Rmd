@@ -296,7 +296,7 @@ as_tibble # convierte data.frame en tibble
 
 
 
-## Sorting (sort, order, rank)
+## Sorting
 
 Ordenando con `sort`
 ```{r}
