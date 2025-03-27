@@ -1,5 +1,6 @@
 ---
 title: "Resumen de Estudio para el Curso de Estadistica Descriptiva 2025"
+author: "Miguel Trias"
 output:
   html_document:
     css: styles.css
@@ -14,6 +15,8 @@ output:
 ```{r setup, echo=FALSE, warning=FALSE, include=FALSE, error=FALSE}
 library("dplyr")
 library("ggplot2")
+
+knitr::opts_chunk$set(comment = "")
 
 # Data
 library("dslabs")
@@ -31,7 +34,7 @@ data('heights')
 
 ## Links utiles
 - [CheatSheet de R-Studio](https://rstudio.github.io/cheatsheets/html/rstudio-ide.html)
-- [Cheatsheet de R Notebooks](https://posit.co/blog/the-r-markdown-cheat-sheet/)
+- [Cheatsheet de R Markdown](https://posit.co/blog/the-r-markdown-cheat-sheet/)
 - [Cheatsheet de ggplot2](https://rstudio.github.io/cheatsheets/html/data-visualization.html)
 - [Otras Cheatsheets de Posit](https://posit.co/resources/cheatsheets/)
 - [Opciones de configuracion de chunks para Knitr](https://yihui.org/knitr/options/)
@@ -57,6 +60,9 @@ setwd( dirname(rstudioapi::getSourceEditorContext()$path) )
 | Ejecutar linea en la que esta el cursor     | `⌘ + ⏎`     | `Ctrl + ⏎`       |
 | Ejecutar todo el script                     | `⌘ + ⇧ + ⏎` | `Ctrl + Alt + r` |
 | Ejecutar todo el script sin eco             | `⌘ + ⇧ + s` | 🤷️               |
+| Mover al tab siguiente del editor           | `^ + ⇥`     | 🤷 |
+| Mover al tab anterior del editor            | `^ + ⇧ + ⇥` | 🤷 |
+| Mover linea hacia arriba o abajo            | `⌥ | ↑↓`    | 🤷 |
 
 
 

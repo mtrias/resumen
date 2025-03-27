@@ -60,9 +60,11 @@ pre {
   font-size: 10px;
   font-family: Cascadia Code, Fira Code, Consolas, Fira Code, Droid Sans Mono, monospace;
 }
+
 pre:not([class]) {
   background: #fcfcfc;
 }
+
 pre.r {
   background: #fafaff;
 }
