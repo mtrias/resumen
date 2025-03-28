@@ -58,7 +58,7 @@ pre {
   border-style: dotted;
   border-radius: 0;
   font-size: 10px;
-  font-family: Cascadia Code, Fira Code, Consolas, Fira Code, Droid Sans Mono, monospace;
+  font-family: Cascadia Code, Fira Code, Consolas, Droid Sans Mono, monospace;
 }
 
 pre:not([class]) {
@@ -74,7 +74,7 @@ pre.r {
 }
 
 .tocify li {
-  font-family: Consolas;
+  font-family: Avenir, Arial Rounded MT, Consolas, Helvetica Neue;
   font-size: 12px;
   line-height: 16px;
   white-space: nowrap;
